@@ -1,0 +1,25 @@
+.cities{
+    display:flex;
+    justify-content: space-evenly;
+    padding-left: 0;
+}
+.cities ul li{
+    list-style: none;
+    cursor:pointer;
+}
+a{
+    text-decoration: none;
+    color:white;
+}
+a:hover{
+    color:rgb(23, 3, 78);
+}
+.searchbar i{
+    color:white;
+}
+.searchbar input{
+    width:80%;
+}
+a i:hover{
+    font-size: 1.5rem;
+}

@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
+import Navbar from './components/Navbar'
+import MainSection from './components/MainSection';
+import WeatherDetails from './components/WeatherDetails';
+import getFormattedWeatherData from './components/FormatingData';
+import { useEffect, useState } from "react";
 
-function App() {
+const App = () => { 
+  
+  const [query, setQuery] = useState({q:"delhi" });
+  const [units, setUnits] = useState("metric");
+  const [weather, setWeather] = useState(null);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const message = query.q ? query.q : "current location";
+      await getFormattedWeatherData({ ...query, units }).then((data) => {
+        setWeather(data);
+      });
+    };
+    fetchWeather();
+  }, [query, units]);
+
+  console.log(weather);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <div className="main">
+     <Navbar setQuery={setQuery} units={units} setUnits={setUnits}/>
+     {weather && (<div id="onlyID">
+        <MainSection weather={weather}/>
+        <WeatherDetails weather={weather}/> 
+     </div>)
+     }
+    </div> 
+    </>
+  )
 }
 
-export default App;
+export default App
+
